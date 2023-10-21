@@ -2,9 +2,6 @@ from flask import Flask, jsonify, request, abort
 from db import empDB
 
 app = Flask(__name__)
-if __name__ == '__main__':
-    app.run()
-
 
 @app.route('/employee', methods=['GET'])
 def getAllEmp():
@@ -45,3 +42,6 @@ def deleteEmp(empId):
         abort(404)
     empDB.remove(em[0])
     return jsonify({'response':'Success'})
+
+if __name__ == '__main__':
+    app.run(host="0.0.0.0", port=3000, debug=True)
