@@ -1,5 +1,6 @@
-from flask import Flask, jsonify, request, abort
+from flask import Flask, jsonify, request, abort, render_template
 from db import empDB
+import os
 
 app = Flask(__name__)
 
@@ -7,12 +8,23 @@ app = Flask(__name__)
 def getAllEmp():
     return jsonify(empDB)
 
+#@app.route('/test_template')
+#def test_template():
+#    current_directory = os.getcwd()
+#    print(f"Directorio actual: {current_directory}")
+#    return render_template('test.html')
+
 
 @app.route('/employee/<empId>', methods=['GET'])
 def getEmp(empId):
-    usr = [ emp for emp in empDB if (emp['id'] == empId) ]
-    return jsonify(usr)
+    #usr = [ emp for emp in empDB if (emp['id'] == empId) ]
+    #return jsonify(usr)
+    employee = next((emp for emp in empDB if emp['id'] == empId), None)
 
+    if employee:
+        return render_template('employee.html', employee=employee)
+    else:
+        return "Empleado no encontrado"
 
 @app.route('/employee/<empId>', methods=['PUT'])
 def updateEmp(empId):
