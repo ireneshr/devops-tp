@@ -54,3 +54,12 @@ Muestra el empleado "0", con un mini formato de tabla:
     Información del Empleado
     ID	Nombre	Telefono
     0	Josephine Hawkins	+1 (862) 428-2160
+
+### Para los unit test 
+
+PS C:\Users\user_n2\Desktop\devops_tp\devops-tp\src> python -m unittest test_app
+...
+----------------------------------------------------------------------
+Ran 3 tests in 0.007s
+
+OK
