@@ -8,17 +8,8 @@ app = Flask(__name__)
 def getAllEmp():
     return jsonify(empDB)
 
-#@app.route('/test_template')
-#def test_template():
-#    current_directory = os.getcwd()
-#    print(f"Directorio actual: {current_directory}")
-#    return render_template('test.html')
-
-
 @app.route('/employee/<empId>', methods=['GET'])
 def getEmp(empId):
-    #usr = [ emp for emp in empDB if (emp['id'] == empId) ]
-    #return jsonify(usr)
     employee = next((emp for emp in empDB if emp['id'] == empId), None)
 
     if employee:
