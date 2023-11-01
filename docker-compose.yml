@@ -1,0 +1,13 @@
+version: '3.8'
+
+services:
+  devops-app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    volumes:
+      - .:/devops-app
+    working_dir: /devops-app
+    command: python3 src/routes.py
+    ports: 
+      - 7000:3000
