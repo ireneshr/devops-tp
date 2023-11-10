@@ -1,4 +1,3 @@
-from datadog import statsd
 from flask import Flask, jsonify, request, abort, render_template
 from db import empDB
 from ddtrace import tracer
@@ -15,7 +14,6 @@ app = Flask(__name__)
 @tracer.wrap(service="all_employees")
 def getAllEmp():
     logging.info('employees.all')
-    statsd.increment('myapp.page_views')
     return jsonify(empDB)
 
 @app.route('/employee/<empId>', methods=['GET'])
@@ -36,7 +34,7 @@ def updateEmp(empId):
         em[0]['name'] = request.json['name']
     if 'phone' in request.json:
         em[0]['phone'] = request.json['phone']
-    logging.info('employees.updated')
+    logging.info('employee.updated')
     return jsonify(em[0])
 
 
@@ -49,7 +47,7 @@ def createEmp():
     'phone':request.json['phone']
     }
     empDB.append(dat)
-    logging.info('employees.created')
+    logging.info('employee.created')
     return jsonify(dat)
 
 
@@ -60,8 +58,9 @@ def deleteEmp(empId):
     if len(em) == 0:
         abort(404)
     empDB.remove(em[0])
-    logging.info('employees.removed')
+    logging.info('employee.removed')
     return jsonify({'response':'Success'})
+
 
 if __name__ == '__main__':
     app.run(host="0.0.0.0", port=3000, debug=True)
