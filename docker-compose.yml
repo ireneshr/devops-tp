@@ -19,7 +19,7 @@ services:
   datadog-agent:
     image: "gcr.io/datadoghq/agent:7"
     environment:
-      - DD_API_KEY=a8a7ae288b04af6689d7bd0eee0a2c2a
+      - DD_API_KEY=API_KEY
       - DD_SITE=datadoghq.com
       - DD_APM_ENABLED=true
     ports:
