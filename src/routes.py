@@ -1,6 +1,11 @@
 from flask import Flask, jsonify, request, abort, render_template
 from db import empDB
-import os
+from ddtrace import tracer
+
+tracer.configure(
+    hostname='datadog-agent',
+    port=8126,
+)
 
 app = Flask(__name__)
 
@@ -48,4 +53,3 @@ def deleteEmp(empId):
 
 if __name__ == '__main__':
     app.run(host="0.0.0.0", port=3000, debug=True)
-    #app.run(host="0.0.0.0", port=os.environ.get("PORT", 3000))
