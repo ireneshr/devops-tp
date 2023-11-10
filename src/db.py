@@ -1,3 +1,6 @@
+import time, random
+from ddtrace import tracer
+
 empDB = [
   {
     "id": "0",
@@ -25,3 +28,7 @@ empDB = [
     "phone": "+1 (817) 422-3504"
   }
 ]
+
+@tracer.wrap(service="in_memory-ddbb")
+def db():
+  time.sleep(random.randint(0, 10)*100)
