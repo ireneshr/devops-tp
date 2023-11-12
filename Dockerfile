@@ -7,6 +7,14 @@ WORKDIR /devops-app
 
 COPY . /devops-app
 
+ENV DD_SERVICE="devops-tp"
+ENV DD_ENV="dev"
+ENV DD_VERSION="0.1.0"
+
+LABEL com.datadoghq.tags.service="devops-tp"
+LABEL com.datadoghq.tags.env="dev"
+LABEL com.datadoghq.tags.version="0.1.0"
+
 RUN pip3 --no-cache-dir install -r requirements.txt
 
-CMD ["python3", "src/routes.py"]
+CMD ["ddtrace-run", "python3", "-m", "src/routes.py"]

@@ -11,3 +11,20 @@ services:
     command: python3 src/routes.py
     ports: 
       - 3000:3000
+    depends_on:
+      - datadog-agent
+    environment:
+      - DD_AGENT_HOST=datadog-agent
+
+  datadog-agent:
+    image: "gcr.io/datadoghq/agent:7"
+    environment:
+      - DD_API_KEY= ${{ secrets.DD_API_KEY }}
+      - DD_SITE=datadoghq.com
+      - DD_APM_ENABLED=true
+    ports:
+      - "8126:8126"
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+      - /proc/:/host/proc/:ro
+      - /sys/fs/cgroup/:/host/sys/fs/cgroup:ro
