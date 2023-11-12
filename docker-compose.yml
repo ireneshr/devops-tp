@@ -19,7 +19,7 @@ services:
   datadog-agent:
     image: "gcr.io/datadoghq/agent:7"
     environment:
-      - DD_API_KEY=API_KEY
+      - DD_API_KEY= ${{ secrets.DD_API_KEY }}
       - DD_SITE=datadoghq.com
       - DD_APM_ENABLED=true
     ports:
