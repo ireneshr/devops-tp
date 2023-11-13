@@ -29,4 +29,4 @@ WORKDIR /devops-app
 # Establezca el comando de entrada para la imagen de producción
 EXPOSE 3000
 
-CMD ["ddtrace-run", "python3", "-m", "src/routes.py"]
+CMD ["python3", "/devops-app/src/routes.py"]
