@@ -25,8 +25,10 @@ RUN python3 --version
 COPY --from=builder /devops-app /devops-app
 COPY --from=builder /usr/lib/python3.11/site-packages /usr/lib/python3.11/site-packages
 
+# Install ddtrace in the production image
+RUN pip3 install ddtrace
+
 WORKDIR /devops-app
-# Establezca el comando de entrada para la imagen de producción
 EXPOSE 3000
 
 CMD ["ddtrace-run", "python3", "-m", "src/routes.py"]
