@@ -17,8 +17,16 @@ RUN python3 --version
 COPY --from=builder /devops-app /devops-app
 COPY --from=builder /usr/lib/python3.11/site-packages /usr/lib/python3.11/site-packages
 
+ENV DD_SERVICE="devops-tp"
+ENV DD_ENV="dev"
+ENV DD_VERSION="0.1.0"
+
+LABEL com.datadoghq.tags.service="devops-tp"
+LABEL com.datadoghq.tags.env="dev"
+LABEL com.datadoghq.tags.version="0.1.0"
+
 WORKDIR /devops-app
 # Establezca el comando de entrada para la imagen de producción
 EXPOSE 3000
 
-CMD ["python3", "src/routes.py"]
+CMD ["python3", "/devops-app/src/routes.py"]
