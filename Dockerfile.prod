@@ -1,29 +1,11 @@
-# Builder stage
-FROM alpine:3.18 as builder
+FROM alpine:3.18
 
-RUN apk add --no-cache python3-dev py3-pip \
-    && pip3 install --upgrade pip \
-    && pip3 install ddtrace
+RUN apk add --no-cache python3-dev py3-pip\
+    && pip3 install --upgrade pip
 
 WORKDIR /devops-app
 
 COPY . /devops-app
-
-# Your other builder stage commands here
-RUN pip3 --no-cache-dir install -r requirements.txt
-
-# Production stage
-FROM alpine:3.18 as production
-
-RUN apk add --no-cache python3
-
-COPY --from=builder /devops-app /devops-app
-COPY --from=builder /usr/lib/python3.9/site-packages /usr/lib/python3.9/site-packages
-
-WORKDIR /devops-app
-
-# Install ddtrace in the production image
-RUN pip3 install ddtrace
 
 ENV DD_SERVICE="devops-tp"
 ENV DD_ENV="dev"
@@ -33,6 +15,6 @@ LABEL com.datadoghq.tags.service="devops-tp"
 LABEL com.datadoghq.tags.env="dev"
 LABEL com.datadoghq.tags.version="0.1.0"
 
-EXPOSE 3000
+RUN pip3 --no-cache-dir install -r requirements.txt
 
 CMD ["ddtrace-run", "python3", "-m", "src/routes.py"]
