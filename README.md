@@ -63,3 +63,9 @@ PS C:\Users\user_n2\Desktop\devops_tp\devops-tp\src> python -m unittest test_app
 Ran 3 tests in 0.007s
 
 OK
+
+## Como correr la app a nivel prod
+Para correr la aplicación usando la imagen desde dockerhub usar:   
+```
+docker-compose -f docker-compose.prod.yml up -d
+```
