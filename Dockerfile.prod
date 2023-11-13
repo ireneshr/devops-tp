@@ -1,7 +1,8 @@
 FROM alpine:3.18 as builder
 
-RUN apk add --no-cache python3-dev py3-pip\
-    && pip3 install --upgrade pip
+RUN apk add --no-cache python3-dev py3-pip \
+    && pip3 install --upgrade pip \
+    && pip3 install ddtrace
 RUN python3 --version
 WORKDIR /devops-app
 
@@ -25,10 +26,7 @@ RUN python3 --version
 COPY --from=builder /devops-app /devops-app
 COPY --from=builder /usr/lib/python3.11/site-packages /usr/lib/python3.11/site-packages
 
-# Install ddtrace in the production image
-RUN pip3 install ddtrace
-
 WORKDIR /devops-app
 EXPOSE 3000
 
-CMD ["ddtrace-run", "python3", "-m", "src/routes.py"]
+CMD ["/usr/local/bin/ddtrace-run", "python3", "-m", "src/routes.py"]
