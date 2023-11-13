@@ -29,4 +29,4 @@ COPY --from=builder /usr/lib/python3.11/site-packages /usr/lib/python3.11/site-p
 WORKDIR /devops-app
 EXPOSE 3000
 
-CMD ["/usr/local/bin/ddtrace-run", "python3", "-m", "src/routes.py"]
+CMD ["ddtrace-run", "python3", "-m", "src/routes.py"]
