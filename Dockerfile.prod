@@ -1,20 +1,24 @@
-FROM alpine:3.18
+FROM alpine:3.18 as builder
 
 RUN apk add --no-cache python3-dev py3-pip\
     && pip3 install --upgrade pip
-
+RUN python3 --version
 WORKDIR /devops-app
 
 COPY . /devops-app
 
-ENV DD_SERVICE="devops-tp"
-ENV DD_ENV="dev"
-ENV DD_VERSION="0.1.0"
-
-LABEL com.datadoghq.tags.service="devops-tp"
-LABEL com.datadoghq.tags.env="dev"
-LABEL com.datadoghq.tags.version="0.1.0"
-
 RUN pip3 --no-cache-dir install -r requirements.txt
 
-CMD ["ddtrace-run", "python3", "-m", "src/routes.py"]
+# Copie los archivos de la imagen de compilación a la imagen de producción
+FROM alpine:3.18 as production
+
+RUN apk add --no-cache python3
+RUN python3 --version
+COPY --from=builder /devops-app /devops-app
+COPY --from=builder /usr/lib/python3.11/site-packages /usr/lib/python3.11/site-packages
+
+WORKDIR /devops-app
+# Establezca el comando de entrada para la imagen de producción
+EXPOSE 3000
+
+CMD ["python3", "src/routes.py"]
