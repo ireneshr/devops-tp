@@ -18,7 +18,7 @@ class TestApp(unittest.TestCase):
 
     def test_get_non_existing_employee(self):
         response = self.app.get('/employee/1000')
-        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response.status_code, 400)
 
 
 if __name__ == '__main__':

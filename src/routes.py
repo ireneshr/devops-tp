@@ -24,7 +24,7 @@ def getEmp(empId):
     if employee:
         return render_template('employee.html', employee=employee)
     else:
-        return "Empleado no encontrado"
+        return abort(400, description='Empleado no encontrado')
 
 @app.route('/employee/<empId>', methods=['PUT'])
 @tracer.wrap(service="update_employee")
