@@ -2,7 +2,7 @@ version: '3.8'
 
 services:
   devops-app:
-    image: "ireneshr/devops-tp:e8e0ab8f31b84aa13b50aa6bc8639f12f060c324"
+    image: "ireneshr/devops-tp:2251e0f10728d20074216c98141392e1aa3cc780"
     command: python3 src/routes.py
     ports: 
       - 3000:3000
