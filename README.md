@@ -1,24 +1,16 @@
 # DevOps TP
-Trabajo práctico para aplicar los conceptos y herramientas aprendidas en el curso de DevOps
+Trabajo práctico para aplicar los conceptos y herramientas aprendidas en el curso de DevOps.
 
-Una vez que te bajas el repo, debes: 
+## Obten el API Key de Datadog
+Por motivos de seguridad el API Key no se puede commitear al repo, por lo cual está guardado como un **secret en el repo**. El placeholder en los docker-compose es sólo para recordarnos y seguir el mismo patrón de los otros secrets, el mismo no es introducido por github debido a como armamos los github actions (pero se podría).
 
-a. buildear la imagen de docker
+## Correr la app a nivel local
+Para correr la aplicación usando el código local deberás correr el siguiente comando:   
+```
+docker-compose up -d
+```
 
-    a.1) usando el dockerfile 
-            docker build -t devopstp . 
-
-    a.2) o usando el docker-compose.yml
-            docker compose up -d        // si usas esta opcion ya no tenes que ir por el punto b,
-                                        // xq el programa ya queda en ejecución
-
-b. <solo si fuiste por el camino a.1> 
-   Despues de buildear la imagen deberias poner a correr el contenedor, asi:  
-            docker run -it --publish 7000:3000 devopstp
-
-Para probar el funcionamiento de la app:
-
-En cualquier navegador --> http://localhost:7000/employee (muestra todos los empleados de la base de datos)
+En cualquier navegador --> http://localhost:3000/employee (muestra todos los empleados de la base de datos)
 
 [
   {
@@ -48,14 +40,20 @@ En cualquier navegador --> http://localhost:7000/employee (muestra todos los emp
   }
 ]
 
-Otra prueba: http://localhost:7000/employee/0
+Otra prueba: http://localhost:3000/employee/0
 
 Muestra el empleado "0", con un mini formato de tabla: 
     Información del Empleado
     ID	Nombre	Telefono
     0	Josephine Hawkins	+1 (862) 428-2160
 
-### Para los unit test 
+## Correr la app a nivel prod
+Para correr la aplicación usando la imagen desde dockerhub usar:   
+```
+docker-compose -f docker-compose.prod.yml up -d
+```
+
+## Unit test 
 
 PS C:\Users\user_n2\Desktop\devops_tp\devops-tp\src> python -m unittest test_app
 ...
@@ -63,9 +61,3 @@ PS C:\Users\user_n2\Desktop\devops_tp\devops-tp\src> python -m unittest test_app
 Ran 3 tests in 0.007s
 
 OK
-
-## Como correr la app a nivel prod
-Para correr la aplicación usando la imagen desde dockerhub usar:   
-```
-docker-compose -f docker-compose.prod.yml up -d
-```
