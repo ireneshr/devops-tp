@@ -50,7 +50,7 @@ jobs:
         id: meta
         uses: docker/metadata-action@v4
         with:
-          images: dockeruser46/devops-tp
+          images: ireneshr/devops-tp
 
       - name: Build and push Docker image
         uses: docker/build-push-action@v4
